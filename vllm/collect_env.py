@@ -96,6 +96,9 @@ DEFAULT_PIP_PATTERNS = {
 def run(command):
     """Return (return-code, stdout, stderr)."""
     shell = True if type(command) is str else False
+    if shell:
+        if not re.match(r'^[a-zA-Z0-9_\-/\\]+$', command):
+            raise ValueError("Invalid command format")
     p = subprocess.Popen(command,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE,
